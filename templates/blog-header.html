@@ -1,0 +1,32 @@
+<div class="navbar">
+    <nav class="blogNavbar">
+        <h3>{{ author["title"] }}</h3>
+        <div class="action"><button onclick="displayBlogSearch()"><i class="fa-solid fa-magnifying-glass"></i>
+                Search</button>
+        </div>
+    </nav>
+</div>
+
+<!-- Search box modal start-->
+
+<div id="blogSearchBox" class="modal">
+    <div class="modal-content">
+      <button class="close-button" onclick="closeBlogSearch()">&times;</button>
+      <br>
+      <div class="searchBody">
+        <h1>Search {{ author['author_username'] }}'s blog</h1>
+        <div class="searchBox">
+          <input type="text" value="{{ author['author_username'] }}" style="display:none;" id="tps" disabled>
+          <input type="text" id="searchBlogInput" autocomplete="off" class="search" placeholder="Enter title of the post">
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </div>
+        <br>
+        <div class="searchPost-row">
+          <div class="searchPost-column" id="blog-searchPost-column">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Search box modal end -->

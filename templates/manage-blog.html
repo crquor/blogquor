@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Manage your blog
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/css/submittableForms.css">
+{% endblock %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock %}
+
+{% block searchModal %}
+{% include "search-modal.html" %}
+{% endblock %}
+
+{% block main %}
+<div class="main">
+    {% if error %}
+    <div class="alert alert-warning alert-dismissible fade show alert-custom" role="alert">
+        <strong>Failed to update the blog: </strong> {{ error }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success alert-dismissible fade show alert-custom" role="alert">
+        <strong> {{ success }} </strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    <div class="formSubmittable" style="width: 35rem;">
+        <h1 class="form-title">Manage Blog</h1>
+        <hr><br>
+        <a class="addPostbtn" href="/account/create-post"><i class="fa-solid fa-square-plus"></i> Create Post</a>
+        <br>
+        <form action="/manage-blog" method="post" enctype="multipart/form-data">
+            <span class="form-label">Blog URL</span>
+            <br>
+            <div class="blogURL">
+                <a href="/{{ blogDetail['author_username'] }}">/{{ blogDetail['author_username'] }}</a>
+            </div>
+            <span class="form-label">Blog Title *</span>
+            <br>
+            <input name="title" value="{% if blogDetail['title'] == None %}{% else %}{{ blogDetail['title'] }}{% endif %}" placeholder="Enter a title for your blog" type="text" required>
+            <br>
+            <span class="form-label">About </span>
+            <br>
+            <textarea name="aboutAuthor" style="height: 150px;">{% if blogDetail['about'] == None %}{% else %}{{ blogDetail['about']}}{% endif %}</textarea>
+            <br>
+            <span class="form-label">Upload Your Photo</span>
+            <br>
+            <input name="photo" type="file" accept="image/*">
+            <br>
+            <span class="form-label">Instagram</span>
+            <br>
+            <input name="igUrl" value="{% if blogDetail['igURL'] == None %}{% else %}{{ blogDetail['igURL'] }}{% endif %}" placeholder="Your instagram profile's link" type="text">
+            <br>
+            <span class="form-label">X (Twitter)</span>
+            <br>
+            <input name="xUrl" value="{% if blogDetail['xURL'] == None %}{% else %}{{ blogDetail['xURL'] }}{% endif %}" placeholder="Your twitter profile's link" type="text">
+            <br>
+            <button class="form-smbt-btn" type="submit">Update Blog</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

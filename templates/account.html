@@ -1,0 +1,91 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Manage Account
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/css/mgmac.css">
+{% endblock %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock %}
+
+{% block searchModal %}
+{% include "search-modal.html" %}
+{% endblock %}
+
+{% block main %}
+<h1 class="page-title">Manage Account</h1>
+<br>
+<div class="action1">
+<a class="manpDe" href="/account/logout"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+</div>
+<div class="main">
+    <br>
+    <div class="detMnp">
+        <div class="usn">
+            <h3>Username</h3>
+            <br>
+            <p class="displayDe">{{ username }}</p>
+        </div>
+        <br>
+        <div class="manageEmail">
+            <h3>Email</h3>
+            <br>
+            <p class="displayDe">{{ email }}</p>
+            <a class="manpDe" href="/account/change-email"><i class="fa-duotone fa-solid fa-envelope"></i> Change
+                Email</a>
+        </div>
+        <br>
+        <div class="manageEmail">
+            <h3>Password</h3>
+            <a class="manpDe" href="/account/change-password"><i class="fa-solid fa-key"></i> Change Password</a>
+        </div>
+
+        <div class="deleteAccount">
+            <div class="alert alert-danger alert-custom" role="alert">
+                This is a danger zone
+            </div>
+            <h3>Delete your account</h3>
+            {% if deleteAccounterror %}
+            <div class="alert alert-warning alert-dismissible fade show alert-custom" role="alert">
+                <strong>Failed to delete the account: </strong> {{ deleteAccounterror }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            <button class="manpDe" onclick="displayAccountModal()"><i class="fa-solid fa-user-xmark"></i> Delete
+                Account</button>
+            <div id="accountModal" class="acc-modal" style="display: none;">
+                <div class="account-modal-content">
+                    <button class="close-button" onclick="closeAccountModal()">&times;</button>
+                    <br>
+                    <div class="content">
+                        <h2>Delete Account</h2>
+                        <hr>
+                        <p>Are you sure that you want to delete your account? This action is not reversible in any way.
+                        </p>
+                        <br>
+                        <form action="/account/delete-account" method="post">
+                            <strong>Enter your password to verify your identity: </strong>
+                            <br>
+                            <input type="password" name="verifyPwd" placeholder="Verify your password"
+                                class="verifyInput" required>
+                            <br>
+                            <input type="button" class="cancelbutton" onclick="closeAccountModal()" value="Cancel">
+                            <button type="submit" class="warnDeletebtn">
+                                <i class="fa-solid fa-triangle-exclamation"></i> Confirm Deletion
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

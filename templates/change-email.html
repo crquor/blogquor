@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Change Email
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/css/submittableForms.css">
+{% endblock %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock %}
+
+{% block searchModal %}
+{% include "search-modal.html" %}
+{% endblock %}
+
+{% block main %}
+<div class="main">
+    {% if error %}
+    <div class="alert alert-warning alert-dismissible fade show alert-custom" role="alert">
+        <strong>Failed to update the email: </strong> {{ error }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success alert-dismissible fade show alert-custom" role="alert">
+        <strong> {{ success }} </strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    <div class="formSubmittable">
+        <h1 class="form-title">Change Email</h1>
+        <hr><br>
+        <form action="/account/change-email" method="post">
+            <span class="form-label">New Email </span>
+            <br>
+            <input type="email" name="newEmail" placeholder="Enter a new email" value="{{ newEmail }}" required>
+            <br>
+            <span class="form-label">Verify your Password</span>
+            <br>
+            <input type="password" name="verifyPswd" placeholder="Enter your password" value="{{ verifyPassword }}"
+                minlength="8" required>
+            <br>
+            <button class="form-smbt-btn" type="submit">Change Email</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

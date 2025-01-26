@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Blogquor
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/css/blogLayout.css">
+{% endblock %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock %}
+
+{% block searchModal %}
+{% include "search-modal.html" %}
+{% endblock %}
+
+{% block main %}
+</div>
+<div class="row">
+  <div class="leftcolumn">
+    {% for post in posts %}
+    <div class="post">
+      <a href="/{{ post['author_username'] }}/posts/{{ post['id'] }}" class="post-title-link">
+        <h2>{{ post["title"] }}</h2>
+      </a>
+      <br>
+      <br>
+      <strong>Published on: {{ post["created_at"][:10] }}</strong>
+      <br>
+      <br>
+      <p>{{ post["post_description"] }}</p>
+      <br>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="rightcolumn">
+    <div class="card">
+      <h2 class="card-title">Tags</h2>
+      <br>
+      {% for tag in tags %}
+      <a class="tagLink" href="/search/Tag?idf={{ tag['name'] }}"><span class="tagforPost"> {{ tag['name'] }}</span></a>
+      {% endfor %}
+      <br>
+      <br>
+      <a href="/tags" class="seeMore">See all tags</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block title %}
+LOGIN
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/css/submittableForms.css">
+{% endblock %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock %}
+
+{% block searchModal %}
+{% include "search-modal.html" %}
+{% endblock %}
+
+{% block main %}
+<div class="main">
+    {% if error %}
+    <div class="alert alert-warning alert-dismissible fade show alert-custom" role="alert">
+        <strong>Login Failed: </strong> {{ error }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    <div class="formSubmittable">
+        <h1 class="form-title">LOGIN</h1>
+        <br>
+        <p><strong>Not a registered user? <a class="gotoLink" href="/register">Create an account</a></strong></p>
+        <hr>
+        <br>
+        <form action="/login" method="post">
+            <span class="form-label">Username</span>
+            <br>
+            <input type="text" name="lgUsn" placeholder="Enter your username" value="{{ username }}" minlength="4"
+                autofocus required>
+            <br>
+            <span class="form-label">Password</span>
+            <br>
+            <input type="password" name="lgPswd" placeholder="Enter your password" value="{{ password }}" required>
+            <br>
+            <div class="hcaptcha">
+                {{ xcaptcha }}
+            </div>
+            <br>
+            <button class="form-smbt-btn" type="submit">LOGIN</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

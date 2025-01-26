@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+All tags
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/css/blogPost.css">
+{% endblock %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock %}
+
+{% block searchModal %}
+{% include "search-modal.html" %}
+{% endblock %}
+
+{% block main %}
+<div class="head">
+    <div class="header">
+        <h1 class="post-title"># All Tags</h1>
+    </div>
+</div>
+<div class="row">
+    <div class="column">
+        <div class="card">
+            <div class="tags">
+                {% for tag in tags %}
+                <a class="tagLink" href="/search/Tag?idf={{ tag['name'] }}"><span class="tagforPost"> {{ tag['name']
+                        }}</span></a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

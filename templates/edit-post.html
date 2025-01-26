@@ -1,0 +1,117 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Edit Post
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/css/submittableForms.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2-dark.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet">
+<style>
+    .formSubmittable{
+        width: 45rem;
+        max-width: 90% !important;
+    }
+</style>
+{% endblock %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock %}
+
+{% block searchModal %}
+{% include "search-modal.html" %}
+{% endblock %}
+
+{% block main %}
+<div class="main">
+    {% if error %}
+    <div class="alert alert-warning alert-dismissible fade show alert-custom" role="alert">
+        <strong>Failed to update the post: </strong> {{ error }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% if success %}
+    <div class="alert alert-success alert-dismissible fade show alert-custom" role="alert">
+        <strong> {{ success }} </strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    <div class="formSubmittable">
+        <h1 class="form-title">Edit Post</h1>
+        <hr><br>
+        <form action="/manage-blog/edit-post?id={{ postDetail['id'] }}" method="post" enctype="multipart/form-data">
+            <span class="form-label">Title *</span>
+            <br>
+            <input name="postTitle"
+                value="{% if postDetail['title'] == None %}{% else %}{{ postDetail['title']}}{% endif %}"
+                placeholder="Enter a title" type="text" required>
+            <br>
+            <span class="form-label">Desription </span>
+            <br>
+            <textarea name="postDescription"
+                style="height: 150px;">{% if postDetail['post_description'] == None %}{% else %}{{ postDetail['post_description']}}{% endif %}</textarea>
+            <br>
+            <span class="form-label">Tags *</span>
+            <br>
+            <br>
+            <select id="tags" name="tags[]" multiple required>
+                    {% for tag in tags %}
+                    <option value="{{ tag['id'] }}">{{ tag['name'] }}</option>
+                    {% endfor %}
+            </select>
+            <br>
+            <br>
+            <span class="form-label">Content *</span>
+            <br>
+            <br>
+            <input type="hidden" name="content" id="content">
+            <div id="editor">{% if postDetail['content'] == None %}{% else %}{{ postDetail['content']|safe }}{% endif %}</div>
+            <br>
+            <button class="form-smbt-btn" type="submit">Save changes</button>
+        </form>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
+
+<script>
+    $(document).ready(function() {
+        // Initialize Select2
+        $('#tags').select2();
+    });
+
+    const associatedTags = {{ associated_tags|tojson|safe }};
+
+    $('#tags').val(associatedTags);
+    $('#tags').trigger('change');
+
+    const quill = new Quill('#editor', {
+    theme: 'snow',
+    modules: {
+        toolbar: [
+            ['bold', 'italic', 'underline', 'strike'],
+            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+            [{ 'header': [1, 2, 3, false] }],
+            ['link'],
+            ['blockquote', 'code-block'],   // Added blockquote and code-block
+            [{ 'color': [] }, { 'background': [] }],  // Added color and background color
+            [{ 'align': [] }],  // Added alignment options
+            ['clean']  // Clean button
+        ]
+    }
+});
+
+    var form = document.querySelector('form');
+    form.onsubmit = function () {
+        var content = document.querySelector('#content');
+        content.value = quill.root.innerHTML;  // Get the content from the Quill editor
+    };
+
+</script>
+
+
+{% endblock %}

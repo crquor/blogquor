@@ -1,0 +1,36 @@
+<nav id="navbar">
+    <h4 class="logo">BLOGQUOR</h4>
+    <ul class="nav-links" id="nav">
+        <li><a href="/">HOME</a></li>
+        <li class="searchbtn"><button onclick="displaySearch()">SEARCH</button></li>
+        {% if "user_id" in session %}
+        <li><a href="/manage-blog">MANAGE BLOG</a></li>
+        <li><a href="/manage-blog/create-post"><i class="fa-solid fa-circle-plus"></i> Create Post</a></li>
+        <li class="mbglink"><a href="/account"><i class="fa-solid fa-circle-user"></i> Account</a></li>
+        <li class="mbglink"><a href="/account/logout" title="Logout"><i class="fa-solid fa-right-from-bracket"></i> </a></li>
+        {% else %}
+        <li class="mbglink"><a href="/login"><i class="fa-solid fa-lock"></i> LOGIN</a></li>
+        {% endif %}
+    </ul>
+    <!-- Nav links dropdown for mobile devices Start -->
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fa-solid fa-bars-staggered"></i>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-dark">
+            <li><a class="dropdown-item" href="/"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><button onclick="displaySearch()" class="dropdown-item" id="searchActionBtn"><i class="fa-solid fa-magnifying-glass"></i> Search</button></li>
+            {% if "user_id" in session %}
+            <li><a class="dropdown-item" href="/manage-blog"><i class="fa-solid fa-pen-to-square"></i> Manage Blog</a></li>
+            <li><a class="dropdown-item" href="/manage-blog/create-post"><i class="fa-solid fa-circle-plus"></i>
+                    Create Post</a></li>
+            <li><a class="dropdown-item" href="/account"><i class="fa-solid fa-circle-user"></i> Account</a></li>
+            <li><a class="dropdown-item" href="/account/logout"><i class="fa-solid fa-right-from-bracket"></i>
+                    Logout</a></li>
+            {% else %}
+            <li><a class="dropdown-item" href="/login"><i class="fa-solid fa-lock"></i> Login</a></li>
+            {% endif %}
+        </ul>
+    </div>
+    <!--Nav links dropdown for mobile devices End-->
+</nav>

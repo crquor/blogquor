@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+
+{% block title %}
+REGISTER
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/css/submittableForms.css">
+{% endblock %}
+
+{% block navbar %}
+{% include "navbar.html" %}
+{% endblock %}
+
+{% block searchModal %}
+{% include "search-modal.html" %}
+{% endblock %}
+
+{% block main %}
+<div class="main">
+    {% if success %}
+    <div class="alert alert-success alert-dismissible fade show alert-custom" role="alert">
+        <strong>{{ success }} | <a href="/login"> Login</a> to your account</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    {% if error %}
+    <div class="alert alert-warning alert-dismissible fade show alert-custom" role="alert">
+        <strong>Registration Failed | </strong> {{ error|safe }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endif %}
+    <div class="formSubmittable">
+        <h2 class="form-title">CREATE AN ACCOUNT</h2>
+        <hr>
+        <br>
+        <form action="/register" method="post">
+            <span class="form-label">Email</span>
+            <br>
+            <input type="email" name="rgEmail" placeholder="Enter your email" value="{{ email }}" autofocus required>
+            <br>
+            <span class="form-label">Username</span>
+            <br>
+            <input type="text" name="rgUsn" placeholder="Create a username" value="{{ username }}" minlength="4"
+                required>
+            <br>
+            <span class="form-label">Password</span>
+            <br>
+            <input type="password" name="rgPswd" placeholder="Create a password" value="{{ password }}"
+                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                title="Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character (e.g. @$!%*?&)."
+                required>
+            <br>
+            <span class="form-label">Confirm Password</span>
+            <br>
+            <input type="password" name="rgConfirmPswd" placeholder="Confirm password" value="{{ confirmPassword }}"
+                pattern="^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                title="Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character (e.g. @$!%*?&)."
+                required>
+            <br>
+            {{ xcaptcha }}
+            <br>
+            <button class="form-smbt-btn" type="submit">REGISTER</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

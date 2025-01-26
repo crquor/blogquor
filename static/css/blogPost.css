@@ -1,0 +1,235 @@
+* {
+    box-sizing: border-box;
+}
+
+.navbar {
+    margin: 0;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1c313a;
+    overflow: hidden;
+    border-bottom: 5px solid var(--buttons-background-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+    height: 70px;
+    position: fixed;
+  }
+  
+  .blogNavbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 8px 50px 8px 30px;
+    background-color: #1c313a;
+    height: 100%;
+  }
+  
+  .blogNavbar h3 {
+    margin: 0;
+  }
+  
+  .action button {
+    border: none;
+    background-color: var(--buttons-background-color);
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #f1f1f1;
+    padding: 7px 10px 7px 10px;
+    transition: all 0.5s ease-in-out;
+    font-weight: bolder;
+  }
+  
+  .action button i{
+    padding-right: 10px;
+  }
+  
+  .action button:hover {
+    color: var(--text-withbg-color);
+    border-color: var(--text-withbg-color);
+  }
+
+.row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.head {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.header {
+    margin-top: 100px;
+    padding: 10px;
+    text-align: center;
+    word-wrap: wrap;
+    border-radius: 20px;
+    width: 90%;
+}
+
+.column {
+    width: 90%;
+}
+
+.post-section {
+    padding: 30px 120px 30px 120px;
+}
+
+.comment-section {
+    padding: 30px 120px 30px 120px;
+}
+
+.card,
+.post {
+    background-color: var(--box-background-color);
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 20px;
+}
+
+.post-title {
+    color: var(--text-withbg-color);
+    font-weight: bolder;
+}
+
+.author-actions {
+    display: inline-block;
+}
+
+.author-actions a,
+.author-actions form {
+    display: inline-block;
+}
+
+.deletePostbtn {
+    margin: 5px 0px 0px 0px;
+    padding: 8px;
+    color: #cf392c;
+    font-weight: bold;
+    background-color: transparent;
+    border: 2px solid #cf392c;
+    outline: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.deletePostbtn:hover {
+    color: #f1f1f1;
+    background-color: #cf392c;
+}
+
+.editPostBtn {
+    margin: 0px 5px 5px 5px;
+    padding: 8px;
+    color: #f1f1f1;
+    font-weight: bold;
+    background-color: var(--buttons-background-color);
+    outline: none;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border: 2px solid var(--text-withbg-color);
+}
+
+.editPostBtn:hover {
+    color: var(--text-withbg-color);
+}
+
+.aboutPost {
+    text-align: center;
+}
+
+.aboutPost span {
+    font-size: 1.1rem;
+    font-weight: 450;
+}
+
+.aboutPost .authorLink a {
+    text-decoration: none;
+    color: #b1cae3;
+}
+
+.aboutPost .authorLink:hover {
+    border-bottom: 2px solid #b1cae3;
+}
+
+.labelforTag,
+.labelforDate,
+.labelforAuthor {
+    display: inline;
+    font-size: 1.2rem;
+    padding-right: 5px;
+}
+
+.tagLink {
+    text-decoration: none;
+}
+
+.tagforPost {
+    display: inline-block;
+    background-color: #283c50;
+    color: #bdddff;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 5px 5px 5px 0px;
+    font-size: 17px;
+    transition: font-size 0.3s ease;
+}
+
+.tagforPost:hover {
+    font-size: 20px;
+}
+
+.ql-code-block-container {
+    box-sizing: border-box;
+    background-color: #23241f !important;
+    overflow: hidden;
+    display: inline-block;
+    padding: 8px 12px;
+    max-width: 100%;
+    max-height: fit-content;
+    border-radius: 5px;
+}
+
+blockquote{
+    padding-left: 5px;
+    border-left: 4px solid var(--text-withbg-color);
+}
+
+.ql-align-center{
+    text-align: center;
+}
+
+.ql-align-right{
+    text-align: right;
+}
+
+.ql-align-left{
+    text-align: left;
+}
+
+.ql-align-justify{
+    text-align: justify;
+}
+
+@media screen and (max-width: 800px) {
+    .column {
+        width: 100%;
+        padding: 0;
+    }
+
+    .post-section,
+    .comment-section {
+        padding: 30px;
+    }
+
+}

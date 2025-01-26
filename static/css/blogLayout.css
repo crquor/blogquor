@@ -1,0 +1,234 @@
+.container{
+  margin-top: 100px;
+}
+
+/* Header/Blog Title */
+.navbar {
+  margin: 0;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1c313a;
+  overflow: hidden;
+  border-bottom: 5px solid var(--buttons-background-color);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+  height: 70px;
+  position: fixed;
+}
+
+.blogNavbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 8px 50px 8px 30px;
+  background-color: #1c313a;
+  height: 100%;
+}
+
+.blogNavbar h3 {
+  margin: 0;
+}
+
+.action button {
+  border: none;
+  background-color: var(--buttons-background-color);
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  color: #f1f1f1;
+  padding: 7px 10px 7px 10px;
+  transition: all 0.5s ease-in-out;
+  font-weight: bolder;
+}
+
+.action button i{
+  padding-right: 10px;
+}
+
+.action button:hover {
+  color: var(--text-withbg-color);
+  border-color: var(--text-withbg-color);
+}
+
+.row {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  padding: 5px;
+}
+
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {
+  float: left;
+  width: 50%;
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 27.5%;
+  padding-left: 20px;
+}
+
+.card{
+  position: sticky;
+}
+
+/* Add a card effect for articles */
+.card,
+.post {
+  background-color: var(--box-background-color);
+  border-radius: 20px;
+  padding: 20px;
+  margin-top: 20px;
+  color: #f1f1f1;
+  overflow: hidden;
+  display: block !important;
+}
+
+.post-title-link {
+  color: var(--text-withbg-color);
+  text-decoration: none;
+  padding-bottom: 5px;
+}
+
+.post-title-link h2 {
+  display: inline;
+}
+
+.post-title-link h2:hover {
+  border-bottom: 2px solid var(--text-withbg-color);
+}
+
+.author-actions{
+  display: inline-block;
+}
+
+.author-actions a, .author-actions form{
+  display: inline-block;
+}
+
+.deletePostbtn {
+  margin-top: 8px;
+  padding: 8px;
+  color: #cf392c;
+  font-weight: bold;
+  background-color: transparent;
+  border: 2px solid #cf392c;
+  outline: none;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.deletePostbtn:hover {
+  color: #f1f1f1;
+  background-color: #cf392c;
+}
+
+.editPostBtn {
+  padding: 8px;
+  color: #f1f1f1;
+  font-weight: bold;
+  background-color: var(--buttons-background-color);
+  outline: none;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: 2px solid var(--text-withbg-color);
+  margin-right: 5px;
+}
+
+.editPostBtn:hover{
+  color: var(--text-withbg-color);
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.card-title {
+  color: var(--text-withbg-color);
+  font-weight: bold;
+}
+
+.about-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-image img {
+  margin-top: 40px;
+  max-width: 100%;
+  overflow: hidden;
+  height: 150px;
+  max-height: 180px;
+  border-radius: 20px;
+  object-fit: contain;
+  transition: height 0.8s ease;
+}
+
+.about-image img:hover{
+  height: 170px;
+}
+
+#about p {
+  margin-top: 30px;
+  padding: 0px 10px 0px 10px;
+}
+
+.card .social {
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.card .social i {
+  margin-bottom: 10px;
+  font-size: 30px;
+  color: #f1f1f1;
+  transition: font-size 0.5s ease;
+}
+
+.card .social i:hover{
+  color: var(--text-withbg-color);
+  font-size: 40px;
+}
+
+/* Footer */
+.footer {
+  margin-top: 50px;
+  padding: 20px;
+  text-align: center;
+  background: #ddd;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+
+  .leftcolumn{
+    width: 100%;
+    padding: 20px;
+  }
+
+  .rightcolumn{
+    width: 80%;
+    padding: 20px;
+  }
+
+}
+
+
+@media screen and (max-width:400px) {
+  .blogNavbar{
+    padding: 10px 20px 10px 20px;
+  }
+}

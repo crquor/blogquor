@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ author["title"] }}
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/css/blogLayout.css">
+{% endblock %}
+
+{% block main %}
+
+{% block navbar %}
+{% include "blog-header.html" %}
+{% endblock %}
+
+<div class="container">
+
+  <div class="row">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <div class="alert alert-success alert-dismissible fade show alert-custom" role="alert">
+      <strong>{{ message }}</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    <div class="leftcolumn">
+      {% if not posts %}
+      <div class="post">
+        <h3>I haven't posted anything yet!</h3>
+      </div>
+      {% endif %}
+      {% for post in posts %}
+      <div class="post">
+        <a href="/{{ author['author_username'] }}/posts/{{ post['id'] }}" class="post-title-link">
+          <h2 class="post-title">{{ post["title"] }}</h2>
+        </a>
+        <br><br>
+        {% if session.username == author['author_username'] %}
+        <div class="author-actions">
+          <a href="/manage-blog/edit-post?id={{ post['id'] }}" class="editPostBtn"><i
+              class="fa-solid fa-pen-to-square"></i> Edit Post</a>
+          <form action="/manage-blog/{{ author['author_username'] }}/delete-post?idf={{ post['id'] }}" method="post">
+            <button type="submit" class="deletePostbtn"><i class="fa-solid fa-trash-can"></i> Delete Post</button>
+          </form>
+        </div>
+        <br>
+        <br>
+        {% endif %}
+        <p><strong>Published Date: {{ post["created_at"][:10] }}</strong></p>
+        <p>{{ post["post_description"] }}</p>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="rightcolumn">
+      <div class="card" id="about">
+        <h2 class="card-title">About Me</h2>
+        {% if author["imageURL"] %}
+        <div class="about-image"><img src="/{{ author['imageURL'] }}"></div>
+        {% endif %}
+        <div class="about-p">
+          <p>{% if author['about'] == None %}{% else %}{{ author['about']}}{% endif %}</p>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="card-title">Connect with Me</h2>
+        <br>
+        {% if author["igURL"] %}
+        <a href="{{ author['igURL'] }}" class="social"><i class="fa-brands fa-instagram"></i></a>
+        {% endif %}
+        {% if author["xURL"] %}
+        <a href="{{ author['xURL'] }}" class="social"><i class="fa-brands fa-x-twitter"></i></a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/static/js/searchBlog.js"></script>
+<script src="https://kit.fontawesome.com/e71306ab5e.js" crossorigin="anonymous"></script>
+{% endblock %}

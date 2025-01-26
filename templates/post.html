@@ -1,0 +1,165 @@
+{% extends "layout.html" %}
+
+{% block title %}
+{{ post_details["title"] }}
+{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="/static/css/blogPost.css">
+<link rel="stylesheet" href="/static/css/comments.css" class="stylesheet">
+{% endblock %}
+
+{% block navbar %}
+{% include "blog-header.html" %}
+{% endblock %}
+
+{% block main %}
+
+<div class="head">
+  <div class="header">
+    <h1 class="post-title"># {{ post_details["title"] }}</h1>
+    {% if session.username == post_details['author_username'] %}
+    <div class="author-actions">
+      <a href="/manage-blog/edit-post?id={{ post_details['id'] }}" class="editPostBtn"><i
+          class="fa-solid fa-pen-to-square"></i> Edit Post</a>
+      <form action="/manage-blog/{{ post_details['author_username'] }}/delete-post?idf={{ post_details['id'] }}"
+        method="post">
+        <button type="submit" class="deletePostbtn"><i class="fa-solid fa-trash-can"></i> Delete Post</button>
+      </form>
+    </div>
+    {% endif %}
+  </div>
+</div>
+<div class="row">
+  <div class="column">
+    <div class="aboutPost">
+      <div class="date">
+        <strong class="labelforDate">Published date: </strong> <span> {{ post_details["created_at"][:10] }}</span>
+      </div>
+      <div class="author">
+        <strong class="labelforAuthor">Author: </strong> <span class="authorLink"><a
+            href="/{{ post_details['author_username'] }}">{{
+            post_details["author_username"] }}</a></span>
+      </div>
+      {% if tags %}
+      <div class="tags">
+        <strong class="labelforTag">Tags:
+        </strong>
+        {% for tag in tags %}
+        <a class="tagLink" href="/search/Tag?idf={{ tag['name'] }}"><span class="tagforPost"> {{ tag['name']
+            }}</span></a>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+    <div class="post-section">
+      <div class="post">
+        <p>{{ post_details["post_description"] }}</p>
+        <p>{{ post_details["content"]|safe }}</p>
+      </div>
+    </div>
+    <br>
+    <hr class="section-break">
+    <section class="comment-section">
+      <h1>Discussions</h1>
+      <br>
+      {% if session.user_id %}
+      <div class="add_comment">
+        <br>
+        <form action="/{{ post_details['author_username'] }}/add-comment/{{ post_details['id'] }}" method="post"
+          class="newCommentForm">
+          <textarea name="newComment" placeholder="Add a comment" title="Add a comment" required></textarea>
+          <br>
+          <button type="submit">Post Comment</button>
+        </form>
+      </div>
+      {% endif %}
+      <br>
+      <div class="all-comments">
+        <h2>All comments</h2>
+        <br>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show alert-custom" role="alert">
+          <strong>{{ message }}</strong>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <!-- Top-level comments -->
+        {% for comment in top_level_comments %}
+        <div class="comment" id="comment-{{ comment['id'] }}">
+          <img src="https://api.dicebear.com/9.x/identicon/svg?seed={{ comment['username'] }}" class="comment-avatar">
+          <strong>{{ comment['username'] }}</strong>
+          <p class="comment-content">{{ comment['content'] }}</p>
+
+          {% if session.user_id %}
+          <button onclick="toggleReplyForm('reply-box-{{ comment['id'] }}')" class="replyButton"><i
+              class="fa-solid fa-reply fa-spin"></i> Reply</button>
+          <div id="reply-box-{{ comment['id'] }}" class="reply-comment" style="display:none">
+            <form
+              action="/{{ post_details['author_username'] }}/reply-to-comment/{{ post_details['id'] }}/{{ comment['id'] }}"
+              method="post" class="newCommentForm">
+              <textarea name="replyToComment" placeholder="Reply to the comment" title="Add a reply"
+                required></textarea>
+              <br>
+              <button type="button" onclick="toggleReplyForm('reply-box-{{ comment['id'] }}')">Cancel</button>
+              <button type="submit">Reply</button>
+            </form>
+          </div>
+          {% endif %}
+          <br>
+          <br>
+
+          <!-- Replies to this comment -->
+          {% for reply in comment['replies'] %}
+          <div class="reply" id="comment-{{ reply['id'] }}">
+            <img src="https://api.dicebear.com/9.x/identicon/svg?seed={{ reply['username'] }}" class="comment-avatar">
+            <strong>{{ reply['username'] }}</strong>
+            <p class="comment-content">{{ reply['content'] }}</p>
+
+            {% if session.user_id %}
+            <button onclick="toggleReplyForm('reply-box-{{ reply['id'] }}')" class="replyButton"><i
+                class="fa-solid fa-reply fa-spin"></i> Reply</button>
+            <div id="reply-box-{{ reply['id'] }}" class="reply-comment" style="display:none">
+              <form
+                action="/{{ post_details['author_username'] }}/reply-to-comment/{{ post_details['id'] }}/{{ reply['id'] }}"
+                method="post" class="newCommentForm">
+                <textarea name="replyToComment" placeholder="Reply to the comment" title="Add a reply"
+                  required></textarea>
+                <br>
+                <button type="button" onclick="toggleReplyForm('reply-box-{{ reply['id'] }}')">Cancel</button>
+                <button type="submit">Reply</button>
+              </form>
+            </div>
+            {% endif %}
+            <br>
+            <br>
+            <!-- Nested replies -->
+            {% for nested_reply in reply['replies'] %}
+            <div class="reply" id="comment-{{ nested_reply['id'] }}">
+              <img src="https://api.dicebear.com/9.x/identicon/svg?seed={{ nested_reply['username'] }}"
+                class="comment-avatar">
+              <strong>{{ nested_reply['username'] }}</strong>
+              <p class="comment-content">{{ nested_reply['content'] }}</p>
+              <br>
+              <br>
+            </div>
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+        <br>
+        {% endfor %}
+      </div>
+    </section>
+
+
+  </div>
+</div>
+<script src="/static/js/searchBlog.js"></script>
+<script src="/static/js/comments.js">
+</script>
+{% endblock %}
